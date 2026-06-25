@@ -1,0 +1,8 @@
+# Ignore everything by default
+*
+
+# Allow the specific file we want to track
+!eeg+mamba_transformer_ssl.py
+
+# Allow gitignore itself
+!.gitignore
