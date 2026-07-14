@@ -1,12 +1,12 @@
 # 🔬 Unified EEG Ablation Study: ASD vs. TD Classification
 
-This repository contains a comprehensive ablation study comparing modern sequence models (Mamba, Transformer) against traditional deep learning baselines (1D-CNN, LSTM, GRU, CNN-LSTM) for the classification of Autism Spectrum Disorder (ASD) from EEG signals.
+This repository contains a comprehensive ablation study comparing modern sequence models (Mamba, Transformer) against traditional deep learning baselines (1D-CNN, LSTM, GRU, CNN-LSTM) for the classification of autism spectrum disorder (ASD) vs. typically developing (TD) individuals using EEG data.
 
 ## 📋 Project Overview
 The study evaluates model performance across two distinct datasets to test generalizability and robustness across varying channel densities and hardware environments.
 
 ### **Key Methodology**
-- **Epochs:** 20 (Fixed for fair comparison)
+- **Epochs:** 50 (Fixed for fair comparison)
 - **Input Window:** 256 samples
 - **Metrics:** Test Accuracy (%) and ROC-AUC
 - **Architecture:** Standardized hidden dimensions ($d_{model}=64$) across all models.
@@ -20,14 +20,14 @@ The study evaluates model performance across two distinct datasets to test gener
 
 | Model | Test Accuracy (%) | ROC-AUC |
 | :--- | :---: | :---: |
-| **Mamba** | **82.03%** | 0.882 |
-| **CNN-LSTM** | 81.28% | 0.884 |
-| **1D-CNN** | 81.22% | 0.884 |
-| **Transformer** | 80.14% | **0.893** |
-| **GRU** | 77.73% | 0.849 |
-| **LSTM** | 75.27% | 0.828 |
+| **Mamba** | **86.32%** | 0.920 |
+| **CNN-LSTM** | 86.26% | 0.926 |
+| **1D-CNN** | 86.49% | 0.924 |
+| **Transformer** | 84.03% | **0.928** |
+| **GRU** | 80.60% | 0.912 |
+| **LSTM** | 80.60% | 0.918 |
 
-**Finding:** On high-density data, Mamba achieved the highest raw accuracy, while the Transformer demonstrated the best discriminative power via AUC.
+**Finding:** On high-density data, Mamba achieved the highest raw accuracy at 86.32%, while the Transformer demonstrated the best discriminative power via AUC (0.928).
 
 ### **Dataset 3: Low-Density EEG (8 Channels + M-CHAT)**
 *Source: Raw 8-channel CSVs — ASD vs. Control (Sensor saturation handled via interpolation)*
@@ -46,12 +46,16 @@ The study evaluates model performance across two distinct datasets to test gener
 ---
 
 ## 📈 Summary of Conclusions
-1. **Transformer Superiority in Low-Channel Contexts:** The Transformer model showed exceptional adaptability to the 8-channel dataset, suggesting it effectively captures global dependencies even with sparser spatial information.
-2. **Mamba Consistency:** Mamba remained a top-tier performer in both scenarios, showing high stability and competitive accuracy (approx. 80-82%) regardless of channel count.
+1. **Transformer Superiority in Low-Channel Contexts:** The Transformer model showed exceptional adaptability to the 8-channel dataset, suggesting it effectively captures global dependencies even with limited spatial information.
+
+2. **Mamba Consistency:** Mamba remained a top-tier performer in both scenarios, showing high stability and competitive accuracy (approx. 80-86%) regardless of channel count.
+
 3. **Hybrid Advantages:** The CNN-LSTM hybrid consistently outperformed standalone RNNs (LSTM/GRU), proving that local temporal feature extraction via CNN layers is critical for EEG analysis.
+
 4. **Baseline Performance:** Traditional RNNs (LSTM/GRU) struggled the most with the classification task compared to attention-based or state-space models.
 
 ## 🛠️ Environment
 - **Framework:** PyTorch
 - **Optimization:** Adam Optimizer, Cross-Entropy Loss
 - **Features:** Subject-wise Z-score normalization, Sliding-window segmentation, Sensor saturation masking.
+
